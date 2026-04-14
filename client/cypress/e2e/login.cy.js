@@ -1,14 +1,27 @@
 describe('Cypress Heroes -Tests', () => {
 
-  it('Login com usuário válido', () => {
+   beforeEach(() => {
     cy.visit('http://localhost:3000')
     cy.contains('button', 'Login').click()
-    cy.get('[data-cy="email"]').type("test@test.com")
-    cy.get("[data-cy='password']").type('test123')
-     cy.get('button').contains('Sign in').click();
   })
 
-  it('Login invalido', () => {
-    
+  it('Login com usuário válido', () => {
+    cy.get('[data-cy="email"]').type("test@test.com")
+    cy.get("[data-cy='password']").type('test123')
+    cy.contains('button', 'Sign in').click();
+    cy.contains('Logout').should('be.visible')
+  })
+
+  it('Login inválido', () => {
+    cy.get('[data-cy="email"]').type("test@invalid.com")
+    cy.get("[data-cy='password']").type('test123')
+    cy.contains('button', 'Sign in').click();
+    cy.contains("Invalid email or password").should('be.visible')
+  })
+
+  it('Login incompleto', () => {
+    cy.get('[data-cy="email"]').type("test@invalid.com")
+    cy.contains('button', 'Sign in').click();
+    cy.get('.text-red-500').should('be.visible')
   })
 })
