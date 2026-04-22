@@ -6,7 +6,7 @@ describe('Listagem de heróis', () => {
   })
 
   it('Listar herois apos login', () => {
-    cy.get("[data-cy='name']").eq('6')
+    cy.get("[data-cy='name']").eq('6').should('exist')
     cy.contains("The Smoker").should('be.visible')
     cy.get("[data-cy='hero-card']").should('have.length', 7)
   })
@@ -21,7 +21,7 @@ describe('Listagem de heróis', () => {
     cy.get("[data-cy='avatarFile']").selectFile('cypress/fixtures/avatar.jpg')
     cy.contains('Button', 'Submit').click()
     cy.url().should('include', '/heroes')
-    cy.contains('Wonder Woman').should('be.visible')
+    cy.contains('CatWoman').should('be.visible')
   })
 
 })
